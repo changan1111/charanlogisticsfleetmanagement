@@ -1,0 +1,124 @@
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0d1117; --ink2: #161b22; --ink3: #1c2333;
+      --amber: #d4902a; --amber2: #f0b84a;
+      --cream: #f5efe0; --muted: #7a8599; --dim: #3d4a5c; --red: #e05252;
+    }
+    .login-page { font-family: 'IBM Plex Sans', sans-serif; }
+    .bg-base {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 110% 110%, rgba(212,144,42,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 60% at -10% -10%, rgba(28,35,51,0.9) 0%, transparent 60%),
+        var(--ink);
+    }
+    .bg-dots {
+      position: fixed; inset: 0; z-index: 0;
+      background-image: radial-gradient(rgba(212,144,42,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .bg-glow {
+      position: fixed; z-index: 0; bottom: -120px; left: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(28,35,51,0.8) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .collage-wrap { display: flex; justify-content: center; align-items: center; }
+    .collage-wrap canvas { border-radius: 50%; }
+    .login-page {
+      position: relative; z-index: 1; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .card { width: 100%; max-width: 420px; position: relative; }
+    .card::before, .card::after {
+      content: ''; position: absolute;
+      width: 22px; height: 22px; border-color: rgba(212,144,42,0.35); border-style: solid;
+    }
+    .card::before { top: -7px; left: -7px; border-width: 2px 0 0 2px; }
+    .card::after  { bottom: -7px; right: -7px; border-width: 0 2px 2px 0; }
+    .card-inner {
+      background: rgba(22,27,34,0.88);
+      border: 1px solid rgba(212,144,42,0.13);
+      border-radius: 4px; padding: 52px 44px 44px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 32px 64px rgba(0,0,0,0.6);
+      animation: rise 0.65s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .form-title {
+      font-size: 12px; font-weight: 500; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: center; margin-bottom: 8px;
+    }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 22px 0; }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,144,42,0.2), transparent); }
+    .divider-dot  { width: 4px; height: 4px; border-radius: 50%; background: rgba(212,144,42,0.3); }
+    .field-label {
+      display: block; font-size: 11px; color: var(--muted);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;
+    }
+    .error-banner {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: rgba(224,82,82,0.08); border: 1px solid rgba(224,82,82,0.22);
+      border-radius: 3px; color: #f08080; font-size: 12.5px;
+      margin-bottom: 18px;
+      opacity: 0; transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s; pointer-events: none;
+    }
+    .error-banner.show { opacity: 1; transform: translateY(0); pointer-events: auto; animation: jolt 0.35s ease; }
+    @keyframes jolt { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+    .field { position: relative; margin-bottom: 14px; }
+    .field input {
+      width: 100%; padding: 13px 48px 13px 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 3px; color: var(--cream);
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+      outline: none; letter-spacing: 0.04em;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .field input::placeholder { color: var(--dim); }
+    .field input:focus {
+      border-color: rgba(212,144,42,0.42);
+      background: rgba(212,144,42,0.04);
+      box-shadow: 0 0 0 3px rgba(212,144,42,0.07);
+    }
+    .field input.err { border-color: rgba(224,82,82,0.4); }
+    .eye-btn {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 46px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; cursor: pointer; color: var(--dim);
+      transition: color 0.15s;
+    }
+    .eye-btn:hover { color: var(--cream); }
+    .btn {
+      width: 100%; padding: 13px 16px;
+      background: linear-gradient(135deg, var(--amber) 0%, var(--amber2) 100%);
+      color: var(--ink); font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      border: none; border-radius: 3px; cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: opacity 0.15s, transform 0.12s, box-shadow 0.15s;
+      box-shadow: 0 4px 18px rgba(212,144,42,0.28);
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 7px 24px rgba(212,144,42,0.38); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn .label { transition: opacity 0.2s; }
+    .btn .spinner-wrap {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .btn.loading .label { opacity: 0; }
+    .btn.loading .spinner-wrap { opacity: 1; }
+    .ring {
+      width: 18px; height: 18px; border: 2px solid rgba(13,17,23,0.25);
+      border-top-color: var(--ink); border-radius: 50%; animation: spin 0.65s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .footer { margin-top: 30px; text-align: center; font-size: 11px; color: var(--dim); letter-spacing: 0.05em; line-height: 1.9; }
+    .footer-amber { color: rgba(212,144,42,0.45); }
+    @media (max-width: 480px) { .card-inner { padding: 38px 26px 34px; } }
