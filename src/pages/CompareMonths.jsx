@@ -320,14 +320,14 @@ export default function CompareMonths() {
 function DeltaRow({ label, color, val, thisV, prevV, invert }) {
   const good = invert ? val <= 0 : val >= 0;
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #1f1f2e22', gap: 10 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-        <span style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
-        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{label}</span>
+    <div className="cmp-delta-row">
+      <div className="cmp-delta-label">
+        <span className="cmp-delta-dot" style={{ background: color }} />
+        <span className="cmp-delta-name">{label}</span>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-        <span style={{ fontSize: 11, color: 'var(--muted)' }} className="mono">{fmt(thisV)} <span style={{ opacity: .6 }}>(prev {fmt(prevV)})</span></span>
-        <span className="mono" style={{ fontSize: 13, fontWeight: 700, color: good ? 'var(--green)' : 'var(--red)', minWidth: 90, textAlign: 'right' }}>
+      <div className="cmp-delta-values">
+        <span className="cmp-delta-sub mono">{fmt(thisV)} <span style={{ opacity: .6 }}>(prev {fmt(prevV)})</span></span>
+        <span className="cmp-delta-amt mono" style={{ color: good ? 'var(--green)' : 'var(--red)' }}>
           {val >= 0 ? '+' : '−'}{fmt(Math.abs(val))}
         </span>
       </div>
