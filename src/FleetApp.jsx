@@ -9,6 +9,7 @@ import DayEntry from './pages/DayEntry';
 import History from './pages/History';
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
+import CompareMonths from './pages/CompareMonths';
 import CashOnHand from './pages/CashOnHand';
 import CashMeter from './pages/CashMeter';
 import Vehicles from './pages/Vehicles';
@@ -24,6 +25,7 @@ const ROUTES = [
   { path: '/history',   label: '📋 History',        element: <History /> },
   { path: '/dashboard', label: '📊 Dashboard',      element: <Dashboard /> },
   { path: '/charts',    label: '📈 Charts',         element: <Charts /> },
+  { path: '/compare',   label: '📉 Compare Months', element: <CompareMonths /> },
   { path: '/cash',      label: '💵 Cash on Hand',   element: <CashOnHand /> },
   { path: '/cashmeter', label: '⛽ Cash Meter',      element: <CashMeter /> },
   { path: '/vehicles',  label: '🚛 Vehicles',       element: <Vehicles /> },
