@@ -12,12 +12,18 @@ import { useToast } from '../components/Toast';
 // a driver's cash float carries over between months unless you narrow the
 // date range yourself.
 
+// Only these are actually paid out of the driver's own cash in hand by
+// default — Salary/Incentive/Rent/etc. are company-side costs, never the
+// driver's pocket money, so they start unchecked. Anything else can still
+// be added, but only after confirming it really was driver-paid.
+const DEFAULT_DRIVER_EXP_TYPES = ['Toll', 'Parking', 'Fuel', 'CASH CARD'];
+
 export default function CashMeter() {
   const { vehicles } = useFleet();
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [cashSel, setCashSel] = useState(new Set(CASH_TYPES));
-  const [expSel, setExpSel] = useState(new Set(EXPENSE_TYPES));
+  const [expSel, setExpSel] = useState(new Set(DEFAULT_DRIVER_EXP_TYPES));
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null); // { byVehicle: {vehicle: {given,spent,items[]}} }
   const [activeVehicle, setActiveVehicle] = useState(null);
@@ -27,6 +33,21 @@ export default function CashMeter() {
     const next = new Set(set);
     if (next.has(val)) next.delete(val); else next.add(val);
     setSet(next);
+  }
+
+  // Expense types get an extra confirmation step when *adding* one that
+  // isn't a default driver-paid category — unchecking never needs it.
+  function toggleExpense(val) {
+    const isAdding = !expSel.has(val);
+    if (isAdding && !DEFAULT_DRIVER_EXP_TYPES.includes(val)) {
+      const ok = window.confirm(
+        `Is "${val}" actually paid by the driver out of his own cash in hand?\n\n` +
+        `Only include it here if it reduces what he's currently holding. ` +
+        `Company-paid costs (salary, rent, incentives, etc.) should stay unchecked.`
+      );
+      if (!ok) return;
+    }
+    toggle(expSel, setExpSel, val);
   }
 
   async function calculate() {
@@ -101,10 +122,16 @@ export default function CashMeter() {
         <div className="stl-chk-list">
           {EXPENSE_TYPES.map(t => {
             const checked = expSel.has(t);
+            const isDefault = DEFAULT_DRIVER_EXP_TYPES.includes(t);
             return (
-              <div key={t} className={'stl-chk-item' + (checked ? ' is-checked' : '')} onClick={() => toggle(expSel, setExpSel, t)}>
+              <div key={t} className={'stl-chk-item' + (checked ? ' is-checked' : '')} onClick={() => toggleExpense(t)}>
                 <div className="stl-chk-box">{checked ? '✓' : ''}</div>
                 <span className="stl-chk-name">{t}</span>
+                {!isDefault && (
+                  <span style={{ fontSize: 9, color: 'var(--muted)', border: '1px solid var(--border)', borderRadius: 4, padding: '1px 6px', marginLeft: 6 }}>
+                    confirm to add
+                  </span>
+                )}
               </div>
             );
           })}
