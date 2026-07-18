@@ -10,6 +10,7 @@ import History from './pages/History';
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
 import CashOnHand from './pages/CashOnHand';
+import CashMeter from './pages/CashMeter';
 import Vehicles from './pages/Vehicles';
 import Report from './pages/Report';
 import SettleDriver from './pages/SettleDriver';
@@ -24,6 +25,7 @@ const ROUTES = [
   { path: '/dashboard', label: '📊 Dashboard',      element: <Dashboard /> },
   { path: '/charts',    label: '📈 Charts',         element: <Charts /> },
   { path: '/cash',      label: '💵 Cash on Hand',   element: <CashOnHand /> },
+  { path: '/cashmeter', label: '⛽ Cash Meter',      element: <CashMeter /> },
   { path: '/vehicles',  label: '🚛 Vehicles',       element: <Vehicles /> },
   { path: '/report',    label: '🖨️ Report',         element: <Report /> },
   { path: '/settle',    label: '🧾 Settle Driver',  element: <SettleDriver /> },

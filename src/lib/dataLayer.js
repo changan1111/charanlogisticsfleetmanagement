@@ -72,6 +72,23 @@ export async function getYear(table, year) {
   return sbGet(`/rest/v1/${table}?date=gte.${year}-01-01&date=lte.${year}-12-31&order=date.asc`);
 }
 
+// Fetch rows across an open-ended date range (no month boundary) —
+// used by the Cash Meter, where a driver's balance can span many months.
+// from/to are optional 'YYYY-MM-DD' strings; omit either for an open end.
+export async function getRowsRange(table, from, to) {
+  let url = `/rest/v1/${table}?order=date.asc`;
+  if (from) url += `&date=gte.${from}`;
+  if (to) url += `&date=lte.${to}`;
+  return sbGet(url);
+}
+
+export async function getCashRowsRange(from, to) {
+  let url = `/rest/v1/cash_on_hand?order=date.asc`;
+  if (from) url += `&date=gte.${from}`;
+  if (to) url += `&date=lte.${to}`;
+  return sbGet(url);
+}
+
 export async function updateEntry(table, id, body) {
   return sbPatch(`/rest/v1/${table}?id=eq.${id}`, body);
 }
